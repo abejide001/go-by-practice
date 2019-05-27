@@ -1,18 +1,19 @@
 package main
 
 import (
-	"fmt"
+	f "fmt"
 	"encoding/json"
 	"os"
 	"sort"
+    s "strings"	
 )
 func main() {
 	x := 10
-	fmt.Println("this is where x is stored", &x) // using pointers
-	fmt.Printf("%T\n", &x)
+	f.Println("this is where x is stored", &x) // using pointers
+	f.Printf("%T\n", &x)
 	b := &x
-	fmt.Println("getting the value stored in x", *b)	
-	// fmt.Println(odd(1,2,4,4,5,9,3))
+	f.Println("getting the value stored in x", *b)	
+	// f.Println(odd(1,2,4,4,5,9,3))
 	makeArray()
 	sortArray()
 	sliceArray()
@@ -29,19 +30,19 @@ func main() {
 	}{
 		color: "black",
 	}
-	fmt.Println(anon.color)
+	f.Println(anon.color)
 	s1 := woo("dsfsf")
-	fmt.Println(s1)
+	f.Println(s1)
 	// anon function
 	func() {
-		fmt.Println("anon")
+		f.Println("anon")
 	}()
 	inc := incrementor()
-	fmt.Println("incrementor was called", inc())
+	f.Println("incrementor was called", inc())
 	fact := factorial(5)
-	fmt.Println("factorial of 5 is", fact)
+	f.Println("factorial of 5 is", fact)
 	factLoop := loop(5)
-	fmt.Println("factorial of 5 is", factLoop)
+	f.Println("factorial of 5 is", factLoop)
 }
 
 // using slice
@@ -49,7 +50,7 @@ func slice() {
 	y := []string{"money", "cash", "adsd", "dsfsf", "fdgggg"}
 	x := []string{"money", "cash", "adsd", "dsfsf", "fdgggg", "ghost"}
 	rem := [][]string{x, y}
-	fmt.Println(rem)
+	f.Println(rem)
 }
 
 // mapping
@@ -59,9 +60,9 @@ func mapping() {
 	}
 	x["Mumum"] = 20
 	for i, v := range x {
-		fmt.Println("the index is", i, "and the value is", v)
+		f.Println("the index is", i, "and the value is", v)
 	}
-	fmt.Println(x)
+	f.Println(x)
 }
 
 // Person struct
@@ -87,7 +88,7 @@ func obj() {
 	os.Stdout.Write(b)
 	fullName.human() // human method
 	getValue(fullName)
-	fmt.Println(fullName)
+	f.Println(fullName)
 	// embedded struct
 	secretAgent := Agent{
 		Person: Person{
@@ -96,24 +97,24 @@ func obj() {
 			age:       22,
 		},
 	}
-	fmt.Println(secretAgent.lastName)
+	f.Println(secretAgent.lastName)
 	getValue(secretAgent)
-	fmt.Println("first name is", fullName.firstName, "and last name is", fullName.lastName, "and age is", fullName.age)
+	f.Println("first name is", fullName.firstName, "and last name is", fullName.lastName, "and age is", fullName.age)
 }
 
 // method
 func (s Person) human() {
-	fmt.Println("alade is ", s.age)
+	f.Println("alade is ", s.age)
 }
 
 // passing in a param
 func bar(y int, z int) {
-	fmt.Println(y, z)
+	f.Println(y, z)
 }
 
 // using a return
 func woo(y string) string {
-	return fmt.Sprint("Hello ", y)
+	return f.Sprint("Hello ", y)
 }
 
 // getting the sum of digits in an  array
@@ -123,7 +124,7 @@ func arr() {
 	for i := 0; i < len(array); i++ {
 		sum += array[i]
 	}
-	fmt.Println(sum)
+	f.Println(sum)
 }
 
 // getting the sum of even digits in an  array
@@ -136,7 +137,7 @@ func even() {
 			sum += array[i]
 		}
 	}
-	fmt.Println("sum of even is ", sum)
+	f.Println("sum of even is ", sum)
 }
 
 // concat arrays
@@ -144,26 +145,26 @@ func concat() {
 	arr1 := []int{1,2,3,5,6}
 	arr2 := []int{1,2,2,3,3}
 	conc := append(arr1, arr2...)
-	fmt.Println("concatenating arrays ", conc)
+	f.Println("concatenating arrays ", conc)
 
 	// delete from a slice
 	arr1 = append(arr1[:4], arr1[1:]...) // this removes the item in the first index
-	fmt.Println("returned array", arr1)
+	f.Println("returned array", arr1)
 }
 
 // slicing array 
 func sliceArray() {
 	x := []int{1,2,3,4,5,6,76}
-	fmt.Println("slicng arrays", x[0:4])
+	f.Println("slicng arrays", x[0:4])
 }
 
 // using make
 func makeArray() {
 	x := make([]int, 5, 5)
-	fmt.Println("array with lenght 5", x)
+	f.Println("array with lenght 5", x)
 	x = append(x, 20)
-	fmt.Println(x)
-	fmt.Println(cap(x))
+	f.Println(x)
+	f.Println(cap(x))
 
 }
 
@@ -173,7 +174,7 @@ type being interface {
 }
 
 func getValue(b being) {
-	fmt.Println("i am using the method human", b)
+	f.Println("i am using the method human", b)
 }
 
 // using callback functions
@@ -218,5 +219,18 @@ func sortArray() {
 	xi := []string{"voo", "adfsf", "bav"}
 	// sort.Ints(xi)
 	sort.Strings(xi)
-	fmt.Println("sorted", xi)
+	f.Println("sorted", xi)
+}
+
+// trying byte
+func typeByte() {
+   var x byte = 22
+   f.Println(x)
+}
+
+// convert strings to lower case
+func convert() {
+	x := "abcde"
+	 x = s.ToLower(x)
+	 f.Println(x)
 }
