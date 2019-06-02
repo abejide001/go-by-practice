@@ -1,18 +1,20 @@
 package main
 
 import (
-	f "fmt"
 	"encoding/json"
+	f "fmt"
 	"os"
 	"sort"
-    s "strings"	
+	s "strings"
 )
+
 func main() {
-	x := 10
+	anim()
+	x := "wale"
 	f.Println("this is where x is stored", &x) // using pointers
 	f.Printf("%T\n", &x)
 	b := &x
-	f.Println("getting the value stored in x", *b)	
+	f.Println("getting the value stored in x", *b)
 	// f.Println(odd(1,2,4,4,5,9,3))
 	makeArray()
 	sortArray()
@@ -124,7 +126,7 @@ func arr() {
 	for i := 0; i < len(array); i++ {
 		sum += array[i]
 	}
-	f.Println(sum)
+	f.Println("sum is stored here", &sum)
 }
 
 // getting the sum of even digits in an  array
@@ -133,7 +135,7 @@ func even() {
 	array := []int{1, 2, 3, 4}
 
 	for i := 0; i < len(array); i++ {
-		if array[i] % 2 == 0 {
+		if array[i]%2 == 0 {
 			sum += array[i]
 		}
 	}
@@ -142,8 +144,8 @@ func even() {
 
 // concat arrays
 func concat() {
-	arr1 := []int{1,2,3,5,6}
-	arr2 := []int{1,2,2,3,3}
+	arr1 := []int{1, 2, 3, 5, 6}
+	arr2 := []int{1, 2, 2, 3, 3}
 	conc := append(arr1, arr2...)
 	f.Println("concatenating arrays ", conc)
 
@@ -152,9 +154,9 @@ func concat() {
 	f.Println("returned array", arr1)
 }
 
-// slicing array 
+// slicing array
 func sliceArray() {
-	x := []int{1,2,3,4,5,6,76}
+	x := []int{1, 2, 3, 4, 5, 6, 76}
 	f.Println("slicng arrays", x[0:4])
 }
 
@@ -190,11 +192,11 @@ func getValue(b being) {
 
 // using closures
 func incrementor() func() int {
-  var x int
-  return func() int {
-	  x++
-	  return x
-  }
+	var x int
+	return func() int {
+		x++
+		return x
+	}
 }
 
 //using recursion
@@ -202,19 +204,19 @@ func factorial(n int) int {
 	if n == 0 {
 		return 1
 	}
-	return n * factorial(n - 1)
+	return n * factorial(n-1)
 }
 
 // recusrion with a loop
 func loop(n int) int {
-  total := 1
-  for ; n > 0; n -- {
-	  total *= n
-  }
-  return total
+	total := 1
+	for ; n > 0; n-- {
+		total *= n
+	}
+	return total
 }
 
-// sort an array 
+// sort an array
 func sortArray() {
 	xi := []string{"voo", "adfsf", "bav"}
 	// sort.Ints(xi)
@@ -224,13 +226,32 @@ func sortArray() {
 
 // trying byte
 func typeByte() {
-   var x byte = 22
-   f.Println(x)
+	var x byte = 22
+	f.Println(x)
 }
 
 // convert strings to lower case
 func convert() {
 	x := "abcde"
-	 x = s.ToLower(x)
-	 f.Println(x)
+	x = s.ToLower(x)
+	f.Println(x)
+}
+
+// Animal struct(using marshal)
+type Animal struct {
+	Color  string
+	Height int
+}
+
+func anim() {
+	a := Animal{
+		Color:  "black",
+		Height: 5,
+	}
+	x := []Animal{a} // slice of type animal
+	b, err := json.Marshal(x)
+	if err != nil {
+		f.Println(err)
+	}
+	f.Println(string(b))
 }
