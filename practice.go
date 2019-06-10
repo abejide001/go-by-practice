@@ -9,6 +9,7 @@ import (
 )
 
 func main() {
+	unMarsh()
 	anim()
 	x := "wale"
 	f.Println("this is where x is stored", &x) // using pointers
@@ -239,10 +240,11 @@ func convert() {
 
 // Animal struct(using marshal)
 type Animal struct {
-	Color  string
-	Height int
+	Color  string `json:"Color"`
+	Height int `json:"Height"`
 }
 
+// json marshalling
 func anim() {
 	a := Animal{
 		Color:  "black",
@@ -254,4 +256,16 @@ func anim() {
 		f.Println(err)
 	}
 	f.Println(string(b))
+}
+
+// json unmarshalling
+func unMarsh() {
+	s := `[{"Color":"black","Height":5}]`
+	bs := []byte(s)
+	var a []Animal
+	err := json.Unmarshal(bs, &a)
+	if err != nil {
+		f.Println(err)
+	}
+	f.Println(a)
 }
