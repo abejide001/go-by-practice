@@ -4,17 +4,30 @@ import (
 	"encoding/json"
 	f "fmt"
 	"os"
+	"runtime"
 	"sort"
+	"sync"
 	s "strings"
 )
-
+var wg sync.WaitGroup
 func main() {
+	value := 42
+	point(&value)
+	// channel()
+	f.Println("number of goroutine is", runtime.NumGoroutine())
+	f.Println("NUMBER OF CPU", runtime.NumCPU())
+	f.Println("cgo call", runtime.NumCgoCall())
+	wg.Add(1) // takes an integer
+	go fooo() // launc the function into a goroutine
+	barr()
+	f.Println("number of goroutine is", runtime.NumGoroutine())
+	wg.Wait() // wait for the execution
 	unMarsh()
 	anim()
 	x := "wale"
 	f.Println("this is where x is stored", &x) // using pointers
 	f.Printf("%T\n", &x)
-	b := &x
+	b := &x // reassigning to variable b
 	f.Println("getting the value stored in x", *b)
 	// f.Println(odd(1,2,4,4,5,9,3))
 	makeArray()
@@ -241,7 +254,7 @@ func convert() {
 // Animal struct(using marshal)
 type Animal struct {
 	Color  string `json:"Color"`
-	Height int `json:"Height"`
+	Height int    `json:"Height"`
 }
 
 // json marshalling
@@ -268,4 +281,34 @@ func unMarsh() {
 		f.Println(err)
 	}
 	f.Println(a)
+}
+
+// understanding concurrency
+func fooo() {
+	for i := 0; i < 10; i++ {
+		f.Println("foo", i)
+	}
+}
+
+func barr() {
+	for i := 0; i < 10; i++ {
+		f.Println("bar", i)
+	}
+	wg.Done()
+}
+
+// using channels
+// func channel() {
+// 	c := make(chan string, 3) // buffer channel
+// 	c <- "4ww2"
+// 	c <- "43"
+// 	c <- "44"
+// 	f.Println(<-c)
+// 	f.Println(<-c) // pulling of a value from a channel
+// 	f.Println(<-c)
+
+// }
+
+func point(n *int) {
+  f.Println("should return a an address", n)
 }
